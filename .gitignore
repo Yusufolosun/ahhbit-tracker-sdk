@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# environment variables
+.env
+.env.*
+.env.local
+.env.production
+
+# secrets and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+**/secrets/
+**/credentials/
+
+# wallets and keys
+*.wallet
+*mnemonic*
+*private_key*
+*secret_key*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# coverage and logs
+coverage/
+*.log
