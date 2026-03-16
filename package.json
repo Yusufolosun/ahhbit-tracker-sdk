@@ -6,12 +6,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yusufolosun/AhhbitTracker",
-    "directory": "packages/ahhbit-tracker-sdk"
+    "url": "https://github.com/Yusufolosun/ahhbit-tracker-sdk"
   },
-  "homepage": "https://github.com/Yusufolosun/AhhbitTracker/tree/main/packages/ahhbit-tracker-sdk",
+  "homepage": "https://github.com/Yusufolosun/ahhbit-tracker-sdk",
   "bugs": {
-    "url": "https://github.com/Yusufolosun/AhhbitTracker/issues"
+    "url": "https://github.com/Yusufolosun/ahhbit-tracker-sdk/issues"
   },
   "keywords": [
     "stacks",
