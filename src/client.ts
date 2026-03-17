@@ -27,8 +27,8 @@ function contractPrincipal(c: ContractId): string {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseHabit(json: any): Habit | null {
-  if (!json || json.type === 'none') return null;
-  const v = json.value ?? json;
+  if (!json || json.value === null || json.value === undefined) return null;
+  const v = json.value?.value ?? json.value ?? json;
   return {
     owner: v.owner?.value ?? v.owner,
     name: v.name?.value ?? v.name,
@@ -62,7 +62,7 @@ function parseUserStats(json: any): UserStats {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function unwrapOkNumber(json: any): number {
-  if (json?.type === 'ok') return Number(json.value.value);
+  if (json?.success === true) return Number(json.value.value);
   return Number(json?.value ?? 0);
 }
 
