@@ -14,7 +14,7 @@ TypeScript SDK for interacting with the [AhhbitTracker](https://github.com/Yusuf
 ## Install
 
 ```bash
-npm install ahhbit-tracker-sdk @stacks/transactions @stacks/network
+npm install @yusufolosun/ahhbit-tracker-sdk @stacks/transactions @stacks/network
 ```
 
 ## Usage
@@ -128,4 +128,4 @@ interface Habit {
 
 ## License
 
-[MIT](../../LICENSE)
+[MIT](./LICENSE)
