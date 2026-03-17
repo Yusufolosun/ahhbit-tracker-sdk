@@ -20,11 +20,20 @@ dist/
 **/secrets/
 **/credentials/
 
+# npm auth tokens
+.npmrc
+
 # wallets and keys
 *.wallet
+*.seed
 *mnemonic*
+*seed_phrase*
 *private_key*
+*private-key*
 *secret_key*
+*secret-key*
+*.stx-seed
+*keychain*
 
 # IDE
 .vscode/
