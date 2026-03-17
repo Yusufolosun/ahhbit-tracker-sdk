@@ -80,3 +80,42 @@ describe('buildClaimBonus', () => {
     expect(tx.postConditionMode).toBe(PostConditionMode.Deny);
   });
 });
+
+// ── Input validation ──────────────────────────────────────────
+
+describe('input validation', () => {
+  it('rejects empty habit name', () => {
+    expect(() => buildCreateHabit('', 100_000, SENDER)).toThrow(RangeError);
+  });
+
+  it('rejects habit name exceeding 50 characters', () => {
+    const longName = 'a'.repeat(51);
+    expect(() => buildCreateHabit(longName, 100_000, SENDER)).toThrow(RangeError);
+  });
+
+  it('rejects stake below minimum', () => {
+    expect(() => buildCreateHabit('Read', 100, SENDER)).toThrow(RangeError);
+  });
+
+  it('rejects non-integer stake', () => {
+    expect(() => buildCreateHabit('Read', 100_000.5, SENDER)).toThrow(RangeError);
+  });
+
+  it('rejects non-positive habitId in buildCheckIn', () => {
+    expect(() => buildCheckIn(0)).toThrow(RangeError);
+    expect(() => buildCheckIn(-1)).toThrow(RangeError);
+    expect(() => buildCheckIn(1.5)).toThrow(RangeError);
+  });
+
+  it('rejects non-positive habitId in buildSlashHabit', () => {
+    expect(() => buildSlashHabit(0)).toThrow(RangeError);
+  });
+
+  it('rejects non-positive habitId in buildWithdrawStake', () => {
+    expect(() => buildWithdrawStake(0, 100_000)).toThrow(RangeError);
+  });
+
+  it('rejects non-positive habitId in buildClaimBonus', () => {
+    expect(() => buildClaimBonus(0)).toThrow(RangeError);
+  });
+});

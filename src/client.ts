@@ -8,7 +8,33 @@ import {
   PostConditionMode,
 } from '@stacks/transactions';
 import type { ContractId, Habit, UserHabits, UserStats } from './types';
-import { MAINNET_CONTRACT } from './constants';
+import { MAINNET_CONTRACT, MIN_STAKE_AMOUNT, MAX_HABIT_NAME_LENGTH } from './constants';
+
+// ────────────────────────────────────────────────
+// Validation
+// ────────────────────────────────────────────────
+
+function assertPositiveInteger(value: number, label: string): void {
+  if (!Number.isInteger(value) || value < 1) {
+    throw new RangeError(`${label} must be a positive integer, got ${value}`);
+  }
+}
+
+function assertHabitName(name: string): void {
+  if (typeof name !== 'string' || name.length < 1 || name.length > MAX_HABIT_NAME_LENGTH) {
+    throw new RangeError(
+      `Habit name must be 1-${MAX_HABIT_NAME_LENGTH} characters, got ${name.length}`,
+    );
+  }
+}
+
+function assertStakeAmount(amount: number): void {
+  if (!Number.isInteger(amount) || amount < MIN_STAKE_AMOUNT) {
+    throw new RangeError(
+      `Stake must be an integer >= ${MIN_STAKE_AMOUNT} microSTX, got ${amount}`,
+    );
+  }
+}
 
 // ────────────────────────────────────────────────
 // Helpers
@@ -74,7 +100,7 @@ function unwrapOkNumber(json: any): number {
  * Build arguments for `create-habit` contract call.
  *
  * @param name  Habit name (1-50 UTF-8 characters)
- * @param stakeAmount  Stake in microSTX (>= 100 000)
+ * @param stakeAmount  Stake in microSTX (>= 20 000)
  * @param senderAddress  Address of the caller (for post-conditions)
  * @param contract  Optional contract override (defaults to mainnet)
  */
@@ -84,6 +110,8 @@ export function buildCreateHabit(
   senderAddress: string,
   contract?: Partial<ContractId>,
 ) {
+  assertHabitName(name);
+  assertStakeAmount(stakeAmount);
   const c = resolveContract(contract);
   return {
     contractAddress: c.contractAddress,
@@ -99,6 +127,7 @@ export function buildCreateHabit(
  * Build arguments for `check-in` contract call.
  */
 export function buildCheckIn(habitId: number, contract?: Partial<ContractId>) {
+  assertPositiveInteger(habitId, 'habitId');
   const c = resolveContract(contract);
   return {
     contractAddress: c.contractAddress,
@@ -114,6 +143,7 @@ export function buildCheckIn(habitId: number, contract?: Partial<ContractId>) {
  * Build arguments for `slash-habit` contract call.
  */
 export function buildSlashHabit(habitId: number, contract?: Partial<ContractId>) {
+  assertPositiveInteger(habitId, 'habitId');
   const c = resolveContract(contract);
   return {
     contractAddress: c.contractAddress,
@@ -137,6 +167,8 @@ export function buildWithdrawStake(
   stakeAmount: number,
   contract?: Partial<ContractId>,
 ) {
+  assertPositiveInteger(habitId, 'habitId');
+  assertStakeAmount(stakeAmount);
   const c = resolveContract(contract);
   return {
     contractAddress: c.contractAddress,
@@ -152,6 +184,7 @@ export function buildWithdrawStake(
  * Build arguments for `claim-bonus` contract call.
  */
 export function buildClaimBonus(habitId: number, contract?: Partial<ContractId>) {
+  assertPositiveInteger(habitId, 'habitId');
   const c = resolveContract(contract);
   return {
     contractAddress: c.contractAddress,
