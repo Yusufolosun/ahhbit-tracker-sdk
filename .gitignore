@@ -48,3 +48,6 @@ Thumbs.db
 # coverage and logs
 coverage/
 *.log
+
+# npm pack artifacts
+*.tgz

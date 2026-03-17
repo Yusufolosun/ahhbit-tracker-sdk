@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yusufolosun/ahhbit-tracker-sdk"
+    "url": "git+https://github.com/Yusufolosun/ahhbit-tracker-sdk.git"
   },
   "homepage": "https://github.com/Yusufolosun/ahhbit-tracker-sdk",
   "bugs": {
@@ -46,6 +46,10 @@
     "LICENSE"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "engines": {
     "node": ">=18"
   },
