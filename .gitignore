@@ -51,3 +51,6 @@ coverage/
 
 # npm pack artifacts
 *.tgz
+
+# local publishing notes
+PUBLISHING.md
