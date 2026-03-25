@@ -12,6 +12,10 @@
   "bugs": {
     "url": "https://github.com/Yusufolosun/ahhbit-tracker-sdk/issues"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/Yusufolosun"
+  },
   "keywords": [
     "stacks",
     "stx",
@@ -22,7 +26,12 @@
     "habit-tracker-v2",
     "dapp",
     "web3",
-    "ahhbittracker"
+    "ahhbittracker",
+    "smart-contract",
+    "crypto",
+    "cryptocurrency",
+    "bitcoin",
+    "btc"
   ],
   "type": "module",
   "main": "./dist/index.cjs",
