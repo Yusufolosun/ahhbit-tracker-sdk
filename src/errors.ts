@@ -34,7 +34,7 @@ export class AhhbitError extends Error {
  * @returns AhhbitError if the string matches the Clarity error pattern, null otherwise.
  */
 export function decodeContractError(repr: string): AhhbitError | null {
-  if (!repr) return null;
+  if (typeof repr !== 'string') return null;
   const match = repr.trim().match(CLARITY_ERROR_RE);
   if (!match?.[1]) return null;
 
@@ -48,7 +48,7 @@ export function decodeContractError(repr: string): AhhbitError | null {
  * @returns The error code number, or null if the string doesn't match.
  */
 export function extractClarityErrorCode(repr: string | undefined): number | null {
-  if (!repr) return null;
+  if (typeof repr !== 'string') return null;
   const match = repr.trim().match(CLARITY_ERROR_RE);
   if (!match?.[1]) return null;
   return Number.parseInt(match[1], 10);

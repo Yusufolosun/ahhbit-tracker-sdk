@@ -50,11 +50,13 @@ describe('decodeContractError', () => {
     expect(err!.code).toBe(103);
   });
 
-  it('returns null for non-matching string', () => {
+  it('returns null for non-matching string or invalid types', () => {
     expect(decodeContractError('')).toBeNull();
     expect(decodeContractError('some error')).toBeNull();
     expect(decodeContractError('(ok u103)')).toBeNull();
     expect(decodeContractError('(err 103)')).toBeNull();
+    expect(decodeContractError(undefined as any)).toBeNull();
+    expect(decodeContractError(123 as any)).toBeNull();
   });
 });
 
@@ -68,6 +70,7 @@ describe('extractClarityErrorCode', () => {
     expect(extractClarityErrorCode(undefined)).toBeNull();
     expect(extractClarityErrorCode('')).toBeNull();
     expect(extractClarityErrorCode('u105')).toBeNull();
+    expect(extractClarityErrorCode(123 as any)).toBeNull();
   });
 });
 
