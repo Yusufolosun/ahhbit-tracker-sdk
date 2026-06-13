@@ -26,7 +26,10 @@ export function assertPositiveInteger(value: number, label: string): void {
  * @throws {RangeError} if the name is empty or exceeds the max length.
  */
 export function assertHabitName(name: string): void {
-  if (typeof name !== 'string' || name.length < 1 || name.length > MAX_HABIT_NAME_LENGTH) {
+  if (typeof name !== 'string') {
+    throw new TypeError(`Habit name must be a string, got ${typeof name}`);
+  }
+  if (name.length < 1 || name.length > MAX_HABIT_NAME_LENGTH) {
     throw new RangeError(
       `Habit name must be 1-${MAX_HABIT_NAME_LENGTH} characters, got ${name.length}`,
     );

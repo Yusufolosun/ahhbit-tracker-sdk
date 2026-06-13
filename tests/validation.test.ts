@@ -40,6 +40,12 @@ describe('assertHabitName', () => {
     expect(() => assertHabitName('')).toThrow(RangeError);
     expect(() => assertHabitName('a'.repeat(51))).toThrow(RangeError);
   });
+
+  it('rejects non-string values', () => {
+    expect(() => assertHabitName(undefined as any)).toThrow(TypeError);
+    expect(() => assertHabitName(null as any)).toThrow(TypeError);
+    expect(() => assertHabitName(123 as any)).toThrow(TypeError);
+  });
 });
 
 describe('assertStakeAmount', () => {
