@@ -1,7 +1,7 @@
 {
   "name": "@yusufolosun/ahhbit-tracker-sdk",
-  "version": "1.1.1",
-  "description": "TypeScript SDK for interacting with the AhhbitTracker smart contract on Stacks blockchain — typed transaction builders, read-only queries, and post-condition helpers.",
+  "version": "2.0.0",
+  "description": "TypeScript SDK for the AhhbitTracker smart contracts on Stacks blockchain — habit tracking, accountability groups, streak rewards, typed transaction builders, read-only queries, and developer utilities.",
   "author": "Yusufolosun",
   "license": "MIT",
   "repository": {
@@ -23,11 +23,12 @@
     "blockchain",
     "smart-contract",
     "sdk",
-    "habit-tracker-v2",
+    "habit-tracker-v3",
+    "accountability",
+    "streak-rewards",
     "dapp",
     "web3",
     "ahhbittracker",
-    "smart-contract",
     "crypto",
     "cryptocurrency",
     "bitcoin",
@@ -52,6 +53,7 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "sideEffects": false,
@@ -66,6 +68,8 @@
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run build"
   },
