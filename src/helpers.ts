@@ -116,7 +116,7 @@ export function parseForfeitStatus(json: any): ForfeitStatus {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseReferralInfo(json: any): ReferralInfo | null {
-  if (!json || json.type === 'none') return null;
+  if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
   return {
@@ -137,7 +137,7 @@ export function parseReferrerStats(json: any): ReferrerStats {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseGroup(json: any): Group | null {
-  if (!json || json.type === 'none') return null;
+  if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
   return {
@@ -156,7 +156,7 @@ export function parseGroup(json: any): Group | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseGroupMember(json: any): GroupMember | null {
-  if (!json || json.type === 'none') return null;
+  if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
   return {
@@ -181,7 +181,7 @@ export function parseMemberGroups(json: any): MemberGroups {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseMilestoneReward(json: any): MilestoneReward | null {
-  if (!json || json.type === 'none') return null;
+  if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
   return {
@@ -191,7 +191,7 @@ export function parseMilestoneReward(json: any): MilestoneReward | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseClaimDetails(json: any): ClaimDetails | null {
-  if (!json || json.type === 'none') return null;
+  if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
   return {
