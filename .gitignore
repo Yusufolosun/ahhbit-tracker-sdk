@@ -35,6 +35,12 @@ dist/
 *.stx-seed
 *keychain*
 
+# blockchain config
+Mainnet.toml
+Testnet.toml
+wallet.json
+deployment-plan*.yaml
+
 # IDE
 .vscode/
 .idea/
