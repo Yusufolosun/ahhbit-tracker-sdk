@@ -253,3 +253,15 @@ describe('getExpiredHabits', () => {
     expect(result).toEqual([2, 5]);
   });
 });
+
+describe('Clarity error response propagation', () => {
+  it('throws AhhbitError when contract returns an err response', async () => {
+    mockFetch.mockResolvedValue(stxTx.Cl.error(stxTx.Cl.uint(103)));
+    await expect(getHabitStreak(1, NETWORK)).rejects.toThrowError(
+      expect.objectContaining({
+        code: 103,
+        message: 'Habit not found',
+      }),
+    );
+  });
+});

@@ -158,4 +158,10 @@ describe('normalizeTxId', () => {
   it('keeps 0x prefix if already present', () => {
     expect(normalizeTxId('0xabcd')).toBe('0xabcd');
   });
+
+  it('returns empty string for non-string inputs', () => {
+    expect(normalizeTxId(undefined as any)).toBe('');
+    expect(normalizeTxId(null as any)).toBe('');
+    expect(normalizeTxId(123 as any)).toBe('');
+  });
 });

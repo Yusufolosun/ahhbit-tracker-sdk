@@ -18,6 +18,7 @@ import type {
   ClaimDetails,
 } from './types';
 import { MAINNET_CONTRACT } from './constants';
+import { AhhbitError } from './errors';
 
 // ── Contract Resolution ─────────────────────────
 
@@ -58,10 +59,20 @@ function str(obj: any, key: string): string {
   return String(v(obj, key) ?? '');
 }
 
+/** Check if clarity response represents an error, and throw an AhhbitError if so. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function checkResponse(json: any): void {
+  if (json && typeof json === 'object' && 'success' in json && json.success === false) {
+    const code = Number(json.value?.value ?? json.value ?? 0);
+    throw new AhhbitError(code);
+  }
+}
+
 // ── Habit Tracker Parsers ───────────────────────
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseHabit(json: any): Habit | null {
+  checkResponse(json);
   if (!json || json.value === null || json.value === undefined) return null;
   const raw = json.value?.value ?? json.value ?? json;
   return {
@@ -80,6 +91,7 @@ export function parseHabit(json: any): Habit | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseUserHabits(json: any): UserHabits {
+  checkResponse(json);
   const ids = json?.value?.['habit-ids']?.value ?? json?.['habit-ids']?.value ?? [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return { habitIds: ids.map((item: any) => Number(item.value ?? item)) };
@@ -87,6 +99,7 @@ export function parseUserHabits(json: any): UserHabits {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseUserStats(json: any): UserStats {
+  checkResponse(json);
   const raw = json?.value ?? json;
   const ids = raw?.['habit-ids']?.value ?? [];
   return {
@@ -98,6 +111,7 @@ export function parseUserStats(json: any): UserStats {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseForfeitStatus(json: any): ForfeitStatus {
+  checkResponse(json);
   const raw = json?.value?.value ?? json?.value ?? json;
   return {
     habitId: num(raw, 'habit-id'),
@@ -116,6 +130,7 @@ export function parseForfeitStatus(json: any): ForfeitStatus {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseReferralInfo(json: any): ReferralInfo | null {
+  checkResponse(json);
   if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
@@ -127,6 +142,7 @@ export function parseReferralInfo(json: any): ReferralInfo | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseReferrerStats(json: any): ReferrerStats {
+  checkResponse(json);
   const raw = json?.value ?? json;
   return {
     successfulReferrals: Number(raw?.['successful-referrals']?.value ?? raw?.['successful-referrals'] ?? 0),
@@ -137,6 +153,7 @@ export function parseReferrerStats(json: any): ReferrerStats {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseGroup(json: any): Group | null {
+  checkResponse(json);
   if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
@@ -156,6 +173,7 @@ export function parseGroup(json: any): Group | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseGroupMember(json: any): GroupMember | null {
+  checkResponse(json);
   if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
@@ -171,6 +189,7 @@ export function parseGroupMember(json: any): GroupMember | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseMemberGroups(json: any): MemberGroups {
+  checkResponse(json);
   const raw = json?.value ?? json;
   const ids = raw?.['group-ids']?.value ?? [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -181,6 +200,7 @@ export function parseMemberGroups(json: any): MemberGroups {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseMilestoneReward(json: any): MilestoneReward | null {
+  checkResponse(json);
   if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
@@ -191,6 +211,7 @@ export function parseMilestoneReward(json: any): MilestoneReward | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseClaimDetails(json: any): ClaimDetails | null {
+  checkResponse(json);
   if (!json || json.value === null || json.value === undefined) return null;
   const raw = json?.value?.value ?? json?.value ?? json;
   if (!raw) return null;
@@ -204,12 +225,14 @@ export function parseClaimDetails(json: any): ClaimDetails | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function unwrapOkNumber(json: any): number {
+  checkResponse(json);
   if (json?.success === true) return Number(json.value?.value ?? json.value ?? 0);
   return Number(json?.value ?? 0);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function unwrapOkBoolean(json: any): boolean {
+  checkResponse(json);
   if (json?.success === true) {
     const val = json.value?.value ?? json.value;
     return val === true || val === 'true';

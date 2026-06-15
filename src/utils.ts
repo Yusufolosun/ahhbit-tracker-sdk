@@ -137,5 +137,6 @@ export function isEligibleForCheckIn(
  * Normalize a transaction ID to include the `0x` prefix.
  */
 export function normalizeTxId(txId: string): string {
+  if (typeof txId !== 'string') return '';
   return txId.startsWith('0x') ? txId : `0x${txId}`;
 }
